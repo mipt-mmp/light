@@ -7,7 +7,7 @@ EWave::EWave(EFieldVal val, Length len_wave, NoUnit phase_0) : m_wave(val, EFiel
 }
 
 EWave
-EWave::traveled(Distance l) const {
+EWave::traveled(LengthVal l) const {
     //m_wave /= l; // FIXME: We must lose energy ~ 1 / r
     EWave wave = *this;
     wave.m_wave.rotate(l * m_frequency / consts::c);

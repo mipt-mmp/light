@@ -2,9 +2,8 @@
 #include <QMutexLocker>
 #include <iostream>
 
-PhysicsThread::PhysicsThread(phys::Chamber& chamber, QObject* parent)
-    : QThread(parent)
-    , m_chamber(chamber) {
+PhysicsThread::PhysicsThread(QObject* parent)
+    : QThread(parent) {
     start(LowPriority);
 }
 
@@ -18,7 +17,7 @@ void PhysicsThread::run() {
                 m_allow_run.wait(&m_mutex);
             }
 
-            m_chamber.step();
+            // m_chamber.step();
         }
 
         if (m_period != -1) {
@@ -30,7 +29,7 @@ void PhysicsThread::run() {
         } else {
             QMutexLocker lock(&m_mutex);
             while(m_period.loadRelaxed() == -1) {
-                m_chamber.step();
+                // m_chamber.step();
             }
         }
     }

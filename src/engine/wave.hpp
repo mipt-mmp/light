@@ -15,16 +15,24 @@ public:
     EWave(EFieldVal val, Length len_wave, NoUnit phase_0);
     
 
-    EWave traveled(Distance l) const;
+    EWave traveled(LengthVal l) const;
 
     EWave& operator+=(const EWave& oth) {
-        assert(oth.m_frequency == this->m_frequency); // Overwise we can't sum waves like vectors;
+        if (oth.m_frequency != this->m_frequency) {
+            std::cerr << "Can't sum waves with different freq\n";
+            abort();
+        } // Overwise we can't sum waves like vectors;
+        
         m_wave += oth.m_wave;
         return *this;
     }
 
     auto getIntensity() const {
         return m_wave.Len2();
+    }
+
+    auto getFreq() const {
+        return m_frequency;
     }
 };
 

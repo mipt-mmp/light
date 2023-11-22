@@ -8,6 +8,7 @@ qt_add_executable(light
     mainwindow.hpp
     mainwindow.cpp mainwindow.ui
     physicsthread.hpp physicsthread.cpp
+    experimentdisplayer.cpp experimentdisplayer.hpp
 )
 
 target_link_libraries(light PRIVATE phys Qt6::Core Qt6::Widgets)

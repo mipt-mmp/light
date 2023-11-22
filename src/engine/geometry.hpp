@@ -165,7 +165,7 @@ struct Vector {
     }
 
     template<typename U>
-    Vector rotate(U angle) {
+    void rotate(U angle) {
         static_assert(dim == 2);
         T x = X();
         T y = Y();

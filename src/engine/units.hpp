@@ -172,7 +172,7 @@ sin(const Unit<Num, Meter, Sec, KG, K, Mole, Ampere, Candela>& x) {
     static_assert(Mole == 0);
     static_assert(Ampere == 0);
     static_assert(Candela == 0);
-    return std::sin(*x);
+    return Unit<Num>{std::sin(*x)};
 }
 
 template <typename Num, int Meter, int Sec, int KG, int K, int Mole, int Ampere, int Candela>
@@ -185,7 +185,7 @@ cos(const Unit<Num, Meter, Sec, KG, K, Mole, Ampere, Candela>& x) {
     static_assert(Mole == 0);
     static_assert(Ampere == 0);
     static_assert(Candela == 0);
-    return std::cos(*x);
+    return Unit<Num>{std::cos(*x)};
 }
 
 template <SomeUnit T>

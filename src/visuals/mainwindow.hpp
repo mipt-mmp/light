@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "chamberdisplayer.hpp"
+#include "experimentdisplayer.hpp"
 #include <QMainWindow>
 #include <array>
 #include <QElapsedTimer>
@@ -27,9 +27,11 @@ private:
     Ui::MainWindow* ui;
 
     QTimer* m_timer;
+    ExperimentDisplayer* m_cd;
     
     QElapsedTimer m_elapsed;
 
+    phys::Chamber m_surfaces;
     PhysicsThread* m_physThread;
 
     size_t m_currentAtom = 0;
@@ -39,12 +41,6 @@ private slots:
     void setSimulationSpeed(int);
 
     void updateMetrics();
-
-    void setXLength(int);
-
-    void openHole(bool);
-
-    void setColoring(int);
 };
 
 #endif // MAINWINDOW_H

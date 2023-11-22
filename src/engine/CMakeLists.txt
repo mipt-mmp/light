@@ -1,8 +1,10 @@
 find_package(Qt6 REQUIRED COMPONENTS Concurrent)
 
 add_library(phys STATIC 
-chamber.cpp
-geometry.hpp gasAtom.cpp gasAtom.hpp physconstants.hpp units.hpp chamber.cpp chamber.hpp ballsCollection.hpp ballsCollection.cpp
+geometry.hpp physconstants.hpp units.hpp 
+surface.cpp surface.hpp 
+chamber.cpp chamber.hpp
+wave.cpp wave.hpp
 real.hpp
 )
 

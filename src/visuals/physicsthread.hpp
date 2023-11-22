@@ -6,12 +6,10 @@
 #include <QWaitCondition>
 #include <QAtomicInt>
 
-#include "chamber.hpp"
-
 class PhysicsThread : public QThread {
     Q_OBJECT
 public:
-    PhysicsThread(phys::Chamber& universe, QObject* parent = nullptr);
+    PhysicsThread(QObject* parent = nullptr);
     ~PhysicsThread() override;
 
 public slots:
@@ -49,11 +47,6 @@ public:
     [[nodiscard]] int getPeriod() const;
     [[nodiscard]] bool getStopped();
 
-    void acquireMetrics(phys::Chamber::Metrics& metrics) {
-        QMutexLocker lock(&m_mutex);
-        m_chamber.getMetrics(metrics);
-    }
-
 signals:
     void toggled(bool);
 
@@ -64,7 +57,6 @@ protected:
     void run() override;
 
 private:
-    phys::Chamber& m_chamber;
     QMutex m_mutex;
     QWaitCondition m_allow_run;
     QAtomicInt m_stopped = true;
