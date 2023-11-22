@@ -22,6 +22,10 @@ public:
         m_wave += oth.m_wave;
         return *this;
     }
+
+    auto getIntensity() const {
+        return m_wave.Len2();
+    }
 };
 
 }
