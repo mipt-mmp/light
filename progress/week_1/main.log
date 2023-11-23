@@ -949,4 +949,75 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> T2A/cmss/m/it on input line 15.
 LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 15.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> T2A/cmtt/m/n on input line 15.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> T2A/cmtt/m/n on input line 15.
+LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
+(Font)                  T2A/cmss/m/n --> T2A/cmss/b/n on input line 15.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  T2A/cmss/m/it --> T2A/cmss/b/it on input line 15.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
+(Font)                  OT1/cmss/b/n --> T2A/cmr/b/n on input line 15.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  T2A/cmss/b/n --> T2A/cmss/b/n on input line 15.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  T2A/cmss/m/n --> T2A/cmss/b/n on input line 15.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  T2A/cmss/m/it --> T2A/cmss/b/it on input line 15.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  T2A/cmtt/m/n --> T2A/cmtt/b/n on input line 15.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 15.
+LaTeX Font Info:    Encoding `T2A' has changed to `OT1' for symbol font
+(Font)              `pureletters' in the math version `normal' on input line 15.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
+(Font)                  T2A/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 15.
+LaTeX Font Info:    Encoding `T2A' has changed to `OT1' for symbol font
+(Font)              `pureletters' in the math version `bold' on input line 15.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  T2A/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 15.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on input line 15.
+ (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-basic-dictionary-English.dict
+Dictionary: translator-basic-dictionary, Language: English 
+) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-bibliography-dictionary-English.dict
+Dictionary: translator-bibliography-dictionary, Language: English 
+) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-environment-dictionary-English.dict
+Dictionary: translator-environment-dictionary, Language: English 
+) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-months-dictionary-English.dict
+Dictionary: translator-months-dictionary, Language: English 
+) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-numbers-dictionary-English.dict
+Dictionary: translator-numbers-dictionary, Language: English 
+) (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-theorem-dictionary-English.dict
+Dictionary: translator-theorem-dictionary, Language: English 
+)
+LaTeX Info: Redefining \th on input line 15.
+\c@lstlisting=\count355
+ (./main.nav) [1
+
+pdfTeX warning: pdflatex (file pdftex.map): cannot open font map file
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb) [2
+
+]
+\openout4 = `main.vrb'.
+
+ (./main.vrb<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
+LaTeX Font Info:    Trying to load font information for U+msa on input line 9.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 9.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+
+LaTeX Font Warning: Font shape `T2A/cmr/m/up' undefined
+(Font)              using `T2A/cmr/m/n' instead on input line 9.
+
+LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 9.
+(/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
+File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.93
