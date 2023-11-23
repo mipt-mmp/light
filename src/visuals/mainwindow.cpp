@@ -29,7 +29,6 @@ MainWindow::MainWindow(QWidget* parent)
     , ui(new Ui::MainWindow)
     , m_physThread(new PhysicsThread(this)) {
 
-    ui->setupUi(this);
 
     m_physThread->cont();
 
@@ -37,17 +36,20 @@ MainWindow::MainWindow(QWidget* parent)
     sources->AddSource(std::make_pair(phys::EWave{LightPower, WaveLength, phys::NoUnit{0.0}}, LightPos));
     m_surfaces.AddSurface(sources);
 
-    auto* barrier = new phys::Barrier();
-    barrier->AddHole(Hole1Pos);
-    barrier->AddHole(Hole2Pos);
-    m_surfaces.AddSurface(barrier);
+    m_barrier = new phys::Barrier();
+    m_barrier->AddHole(Hole1Pos);
+    m_barrier->AddHole(Hole2Pos);
+    m_surfaces.AddSurface(m_barrier);
 
-    auto* displayer = new phys::Displayer(DisplayerPos, {XSize, YSize});
-    m_surfaces.AddSurface(displayer);
+    m_displayer = new phys::Displayer(DisplayerPos, {XSize, YSize});
+    m_surfaces.AddSurface(m_displayer);
 
     m_cd = new ExperimentDisplayer(std::move(m_surfaces), this);
     m_cd->setGeometry(rect());
     m_cd->setScale(XSize);
+
+    ui->setupUi(this);
+    connect(ui->distSlider, SIGNAL(valueChanged(int)), this, SLOT(setDistance(int)));
 }
 
 MainWindow::~MainWindow() {
@@ -74,4 +76,15 @@ void MainWindow::setSimulationSpeed(int x) {
 
 void MainWindow::updateMetrics() {
 
+}
+
+void MainWindow::setDistance(int x)
+{
+    // phys::Length delta = HolesDelta * phys::num_t{x / 100.};
+    // phys::Position hole1Pos = {LightPos.X(), LightPos.Y() + delta, ZDisplayerCoord};
+    // phys::Position hole2Pos = {LightPos.X(), LightPos.Y() - delta, ZDisplayerCoord};
+    // m_barrier->SetHolePos(0, hole1Pos);
+    // m_barrier->SetHolePos(1, hole2Pos);
+    m_displayer->setZPos(ZDisplayerCoord + ZDisplayerCoord * phys::num_t{x / 1000.});
+    m_cd->update();
 }

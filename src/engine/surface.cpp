@@ -19,6 +19,11 @@ void Barrier::AddHole(Position hole) {
   m_holes.push_back(std::move(hole));
 }
 
+void Barrier::SetHolePos(size_t i, Position hole)
+{
+  m_holes[i] = hole;
+}
+
 std::vector<std::pair<EWave, Position>> Barrier::getSrcs() const {
   std::vector<std::pair<EWave, Position>> parentSources = m_parent->getSrcs();
   std::vector<std::pair<EWave, Position>> result = {};

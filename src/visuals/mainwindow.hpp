@@ -36,11 +36,15 @@ private:
 
     size_t m_currentAtom = 0;
 
+    phys::Barrier* m_barrier;
+    phys::Displayer* m_displayer;
 private slots:
     void toggleSimulation(bool);
     void setSimulationSpeed(int);
 
     void updateMetrics();
+
+    void setDistance(int);
 };
 
 #endif // MAINWINDOW_H

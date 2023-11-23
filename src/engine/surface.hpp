@@ -44,6 +44,7 @@ class Lights : public Surface {
 class Barrier : public Surface {
  public:
   void AddHole(Position hole);
+  void SetHolePos(size_t i, Position hole);
   virtual std::vector<LightSource> getSrcs() const override;
 
   virtual bool setParent(Surface* surface) override {
@@ -74,6 +75,10 @@ class Displayer : public Surface {
   Position GetCorner() { return m_corner; }
 
   Position GetSizes() { return m_sizes; }
+
+  void setZPos(Length val) {
+    m_corner[2] = val;
+  }
 
   // We assume that every point of displayer is a light source (we will draw
   // intensivity of them)
