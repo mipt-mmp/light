@@ -20,11 +20,11 @@
 
 \section{Young's Double Slit Experiment}
 
-\begin{frame}[fragile]{Problem}
+\begin{frame}{Problem}
   Проверить корректность результатов, полученных при моделировании опыта Юнга.
 \end{frame}
 
-\begin{frame}[fragile]{Solution}
+\begin{frame}{Solution}
   Рассмотри аналитическое решение данной задачи и сверим его с полученными на практике результатами.
   \newline
   \newline
@@ -44,7 +44,7 @@
   \[\delta = x \dfrac{a}{D}\] 
 \end{frame}
 
-\begin{frame}[fragile]{Solution}
+\begin{frame}{Solution}
   Известно, что яркие полосы - интерференционные максимумы - появляются, когда разность хода
   равна целому числу длин волн.
   \[\delta = p \lambda\]
@@ -56,12 +56,12 @@
   где $p \in \mathbb{Z}$, а $\lambda$ - длина волны
 \end{frame}
 
-\begin{frame}[fragile]{Solution}
+\begin{frame}{Solution}
   Выполнив нехитрые преобразования, получаем формулу для расстояния между полосам:
   \[x = \dfrac{D \lambda}{a}\]
 \end{frame}
 
-\begin{frame}[fragile]{Solution}
+\begin{frame}{Solution}
   Параметры нашей модели следующие:
   \newline
   \newline
@@ -78,15 +78,23 @@
   Длина волны ($\lambda$) - $400 \cdot 10^{-9}$м
   \newline
   \pause
-  Количество яруих полос ($n$) - 14
+  Количество ярких полос ($n$) - 14
 \end{frame}
 
-\begin{frame}[fragile]{Solution}
-  Таким образом, результаты, полученные аналитически:
-  \[\dfrac{D \lambda}{a} = 0.0008\]
+\begin{frame}{Solution}
+  Расстояние между верхней яркой полосой и самой нижней равно ребру полотна, на которое светим, то есть $1$ см.
+
   \pause
-  Результаты нашей модели:
-  \[\dfrac{S}{n} \sim 0,000715\]
+  Расстояние между этими полосами равно $13$ максимумам, поэтому итогововая формула должна иметь вид:
+  \[
+    S = \frac{13D\lambda}{a}
+  \]
+  \pause
+  Подставив значения нашей модели, получим:
+  \[
+    \frac{13 * 2 * 400 * 10^{-9}}{10^{-3}} \sim 0.0104\text{ м}
+  \]
+  Что действительно приблизительно равно одному сантиметру.
 \end{frame}
   
 \end{document}
