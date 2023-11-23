@@ -1,0 +1,92 @@
+\documentclass{beamer}
+
+\usepackage{cmap}
+\usepackage{mathtext}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{listings}
+
+\title{Physics of Light}
+
+\usetheme{Berlin}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section{Young's Double Slit Experiment}
+
+\begin{frame}[fragile]{Problem}
+  Проверить корректность результатов, полученных при моделировании опыта Юнга.
+\end{frame}
+
+\begin{frame}[fragile]{Solution}
+  Рассмотри аналитическое решение данной задачи и сверим его с полученными на практике результатами.
+  \newline
+  \newline
+  \pause
+  Введем следующие обозначения:
+  \newline
+  \pause
+  $a$ — расстояние между щелями
+  \newline
+  \pause
+  $D$ — расстояние между перегородкой и проекционным экраном
+  \newline
+  \newline
+  \pause
+  Тогда, при условии того, что $a << D$, геометрическая разность хода $\delta$ в точке $x$
+  выражается следующим образом:
+  \[\delta = x \dfrac{a}{D}\] 
+\end{frame}
+
+\begin{frame}[fragile]{Solution}
+  Известно, что яркие полосы - интерференционные максимумы - появляются, когда разность хода
+  равна целому числу длин волн.
+  \[\delta = p \lambda\]
+  \newline
+  \pause
+  А темные полосы - минимумы - при разности хода, равной нечётному числу полуволн.
+  \[\delta = \dfrac{2p + 1}{2 } \lambda\]
+  \pause
+  где $p \in \mathbb{Z}$, а $\lambda$ - длина волны
+\end{frame}
+
+\begin{frame}[fragile]{Solution}
+  Выполнив нехитрые преобразования, получаем формулу для расстояния между полосам:
+  \[x = \dfrac{D \lambda}{a}\]
+\end{frame}
+
+\begin{frame}[fragile]{Solution}
+  Параметры нашей модели следующие:
+  \newline
+  \newline
+  \pause
+  Размер выводимой интерференционной картины ($S$) - $0,01$м
+  \newline
+  \pause
+  Расстояние между щелями ($a$) - $1 \cdot 10^{-3}$м
+  \newline
+  \pause
+  Расстояние между перегородкой и экраном ($D$) - $2$м
+  \newline
+  \pause
+  Длина волны ($\lambda$) - $400 \cdot 10^{-9}$м
+  \newline
+  \pause
+  Количество яруих полос ($n$) - 14
+\end{frame}
+
+\begin{frame}[fragile]{Solution}
+  Таким образом, результаты, полученные аналитически:
+  \[\dfrac{D \lambda}{a} = 0.0008\]
+  \pause
+  Результаты нашей модели:
+  \[\dfrac{S}{n} \sim 0,000715\]
+\end{frame}
+  
+\end{document}
