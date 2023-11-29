@@ -9,6 +9,8 @@ qt_add_executable(light
     mainwindow.cpp mainwindow.ui
     physicsthread.hpp physicsthread.cpp
     ScreenDisplayer.cpp ScreenDisplayer.hpp
+    multislider.hpp multislider.cpp
+    sizes.hpp
 )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})

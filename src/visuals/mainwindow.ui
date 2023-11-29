@@ -14,31 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QSlider" name="distSlider">
-    <property name="geometry">
-     <rect>
-      <x>620</x>
-      <y>130</y>
-      <width>160</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-    <property name="maximum">
-     <number>1000</number>
-    </property>
-    <property name="pageStep">
-     <number>100</number>
-    </property>
-    <property name="value">
-     <number>1000</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
    <widget class="ScreenDisplayer" name="displayer" native="true">
     <property name="geometry">
      <rect>
@@ -49,11 +24,143 @@
      </rect>
     </property>
    </widget>
+   <widget class="QWidget" name="formLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>0</y>
+      <width>321</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="controls">
+     <item row="0" column="1">
+      <widget class="QSlider" name="RPower">
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>1000</number>
+       </property>
+       <property name="pageStep">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>1000</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSlider" name="GPower">
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>1000</number>
+       </property>
+       <property name="pageStep">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>1000</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>R</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QSlider" name="BPower">
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>1000</number>
+       </property>
+       <property name="pageStep">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>1000</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>G</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>B</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QSlider" name="brightness">
+       <property name="maximum">
+        <number>200</number>
+       </property>
+       <property name="value">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Brightness</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="MultiSlider" name="horizontalSlider">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>550</y>
+      <width>801</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>-1000</number>
+    </property>
+    <property name="maximum">
+     <number>-1</number>
+    </property>
+    <property name="value">
+     <number>-1</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
    <widget class="QPushButton" name="upd">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>460</y>
+      <x>20</x>
+      <y>520</y>
       <width>80</width>
       <height>25</height>
      </rect>
@@ -81,6 +188,11 @@
    <extends>QWidget</extends>
    <header>ScreenDisplayer.hpp</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MultiSlider</class>
+   <extends>QSlider</extends>
+   <header>multislider.hpp</header>
   </customwidget>
  </customwidgets>
  <resources/>

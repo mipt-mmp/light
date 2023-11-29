@@ -43,6 +43,11 @@ ScreenDisplayer::paintEvent(QPaintEvent* /*event*/) {
     }
 }
 
+void ScreenDisplayer::setBrightness(int x)
+{
+    m_brightness = x / 100.;
+}
+
 void 
 ScreenDisplayer::resizeEvent(QResizeEvent* event){
   QWidget::resizeEvent(event);
@@ -54,25 +59,29 @@ ScreenDisplayer::resizeEvent(QResizeEvent* event){
 void 
 ScreenDisplayer::update(const std::vector<phys::LightSource>& srcs) {
     phys::ContigSurface::update(srcs);
+    recolor();
+}
+
+void ScreenDisplayer::recolor()
+{
     const auto& lights = getSrcs();
     if(lights.empty())
         return;
 
-    std::cerr << width() << ' ' << height() << ' ' << lights.size() << '\n';
     if(lights.size() != width() * height()) {
         qDebug() << "lights.size() != width() * height()\n";
         return;
     }
 
-    phys::Brightness maxBrightness;
-
-    for(const auto& [wave,_] : lights) {
-        maxBrightness = std::max(maxBrightness, wave.getIntensity());
+    if(*m_maxBrightness == 0.) {
+        for(const auto& [wave,_] : lights) {
+            m_maxBrightness = std::max(m_maxBrightness, wave.getIntensity());
+        }
     }
 
     for(int i = 0; i < width(); ++i) {
         for(int j = 0; j < height(); ++j) {
-            double value = m_brightness * (lights[i*height() + j].first.getIntensity() / maxBrightness)->getVal();
+            double value = m_brightness * (lights[i*height() + j].first.getIntensity() / m_maxBrightness)->getVal();
             value = std::min(1., value);
             if(m_currentColor == Qt::red) {
                 m_colors[i*height()+j].setRedF(static_cast<float>(value));

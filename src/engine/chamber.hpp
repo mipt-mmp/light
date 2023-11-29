@@ -8,7 +8,8 @@ namespace phys {
 
 class Chamber {
   std::vector<Surface*> m_surfaces;
-  WavyEnvironment m_env;
+  std::vector<RefractiveIndex> m_ns;
+  Frequency m_frequency;
  public:
   struct Metrics {
     std::vector<LightSource> sources;
@@ -19,12 +20,22 @@ class Chamber {
 
   void update();
 
-  void setLight(Frequency f) {
-    m_env = WavyEnvironment(f);
-    std::cerr << m_env.waveLength << '\n';
+  void setZ(int n, Length z) {
+    m_surfaces[n]->setZ(z);
   }
 
-  [[deprecated]] Metrics GetMetrics();
+  void setRefractiveIndex(size_t i, RefractiveIndex n) {
+    m_ns[i] = n;
+  }
+
+  void setLight(Frequency f) {
+    m_frequency = f;
+  }
+
+  void clear() {
+    m_surfaces.clear();
+    m_ns.clear();
+  }
 
   ~Chamber();
 };

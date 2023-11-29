@@ -33,6 +33,8 @@ class Surface {
     return (beg.Z() + end.Z()) / 2;
   }
 
+  virtual void setZ(LengthVal z) = 0;
+
 protected:
   WavyEnvironment m_env;
 };
@@ -55,6 +57,20 @@ class PointLights : public Surface {
     m_rect.first  = std::min(m_rect.first,  source.second);
     m_rect.second = std::max(m_rect.second, source.second);
     m_sources.push_back(std::move(source));
+  }
+
+  virtual void setZ(LengthVal z) override {
+    for(auto& [_,pos] : m_sources) {
+      pos.Z() = z;
+    }
+    m_rect.first.Z() = m_rect.second.Z() = z;
+  }
+
+  void
+  setPower(EFieldVal val) {
+    for(auto& p : m_sources){
+      p.first = EWave(val);
+    }
   }
 
   virtual const std::vector<LightSource>& 
@@ -98,53 +114,20 @@ class PointsBarrier : public Surface {
 
   virtual ~PointsBarrier() override;
 
+  virtual void 
+  setZ(LengthVal z) override {
+    for(auto& [_,pos] : m_sources) {
+      pos.Z() = z;
+    }
+    updateRect();
+  }
+
+
  private:
   void updateRect();
 
   std::vector<LightSource> m_sources;
   std::pair<Position, Position> m_rect;
-};
-
-
-//====================================================================================/
-//===================================< Displayer >====================================/
-//====================================================================================/
-
-
-class Displayer : public Surface {
-  static constexpr Unit<num_t> XSteps = Unit<num_t>{1000.0};
-  static constexpr Unit<num_t> YSteps = Unit<num_t>{1000.0};
-
- public:
-  Displayer(Position corner, Position sizes)
-      : m_corner(corner), m_sizes(sizes) {}
-
-  Position getCorner() { return m_corner; }
-
-  Position getSizes() { return m_sizes; }
-
-  void setZPos(Length val) {
-    m_corner[2] = val;
-  }
-
-  virtual void update(const std::vector<LightSource>&) override;
-
-  virtual std::pair<Position, Position> 
-  getRect() const override {return {m_corner, m_corner};}
-
-  // We assume that every point of displayer is a light source (we will draw
-  // intensivity of them)
-  virtual const std::vector<LightSource>& 
-  getSrcs() const override {return m_dst;}
-
-  virtual ~Displayer() override;
-
- private:
-  void genDisplayMatrix();
-
-  std::vector<LightSource> m_dst;
-  Position m_corner;
-  Position m_sizes;
 };
 
 //====================================================================================/
@@ -176,7 +159,11 @@ public:
     genSurface();
   }
 
-
+  virtual void 
+  setZ(LengthVal z) override {
+    m_corner.Z() = z;
+    genSurface();
+  }
 
 
 private:

@@ -65,56 +65,6 @@ PointsBarrier::updateRect() {
 
 
 //====================================================================================/
-//===================================< Displayer >====================================/
-//====================================================================================/
-
-Displayer::~Displayer() {}
-
-void 
-Displayer::genDisplayMatrix() {
-
-}
-#if 0
-std::vector<LightSource> Displayer::getSrcs() const {
-  std::vector<LightSource> parentSources = m_parent->getSrcs();
-  std::vector<LightSource> result = {};
-
-  if (parentSources.empty()) {
-    return result;
-  }
-
-  Position xShift = m_sizes / XSteps;
-  xShift.Y() = Unit<num_t, 1>{0.0};
-
-  Position yShift = m_sizes / YSteps;
-  yShift.X() = Unit<num_t, 1>{0.0};
-
-  Position endPos = m_sizes + m_corner;
-
-  for (Position curPos = m_corner; curPos.X() <= endPos.X(); curPos += xShift) {
-    for (; curPos.Y() <= endPos.Y(); curPos += yShift) {
-      EWave newWave{parentSources[0].first.getFreq()};
-
-      for (auto& source : parentSources) {
-        newWave += source.first.traveled((source.second - curPos).Len());
-      }
-
-      result.push_back(std::make_pair(newWave, curPos));
-    }
-    curPos.Y() = m_corner.Y();
-  }
-
-  return result;
-}
-#endif
-
-void 
-Displayer::update(const std::vector<LightSource>& src) {
-
-}
-
-
-//====================================================================================/
 //===================================< Contig Surface >===============================/
 //====================================================================================/
 
@@ -149,9 +99,9 @@ ContigSurface::genSurface() {
       pos[1] *= y;
       if(m_isTransparent(pos)) {
         m_srcs.emplace_back(EWave{}, m_transformation(pos));
+        m_rect.first  = std::min(m_rect.first , m_srcs.back().second);
+        m_rect.second = std::max(m_rect.second, m_srcs.back().second);
       }
-      m_rect.first  = std::min(m_rect.first , m_srcs.back().second);
-      m_rect.second = std::max(m_rect.second, m_srcs.back().second);
     }
   } 
 }

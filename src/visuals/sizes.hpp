@@ -3,8 +3,10 @@
 
 #include "units.hpp"
 
-const phys::Length XBoxSize      = 1e-2_m;
+constexpr const phys::Length XBoxSize      = 1e-2_m;
 
-const phys::Length ZDefaultShift = -1_m;
+constexpr const phys::Length XMid          = XBoxSize / 2.__;
+
+constexpr const phys::Length ZScale        = 1e-2_m;
 
 #endif /* VISUALS_SIZES_HPP */

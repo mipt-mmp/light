@@ -37,8 +37,15 @@ private:
 
     size_t m_currentAtom = 0;
 
-    phys::PointsBarrier* m_barrier;
-    phys::Displayer* m_displayer;
+    phys::PointLights* m_lights    = nullptr;
+
+    void presetYng();
+    void presetDifr();
+    void presetLens();
+//    void presetFrenel();
+
+    bool m_tracking = true;
+
 private slots:
     void toggleSimulation(bool);
     void setSimulationSpeed(int);
@@ -47,7 +54,9 @@ private slots:
 
     void physRecalc();
 
-    void setDistance(int);
+    void setDistance(int, int);
+
+    void connectControls();
 };
 
 #endif // MAINWINDOW_H

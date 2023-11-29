@@ -28,14 +28,18 @@ private:
 
     void update(const std::vector<phys::LightSource>& srcs) override;
 
-public slots:
+    phys::Brightness m_maxBrightness;
 
+    void recolor();
+public slots:
     void 
     resetColors() {
         m_colors.assign(height()*width(), Qt::black);
     }
 
     void paintEvent(QPaintEvent* event) override;
+
+    void setBrightness(int);
 };
 
 #endif // UNIVERSEDISPLAYER_HPP
