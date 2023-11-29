@@ -117,6 +117,8 @@ struct Vector {
         return !(*this == oth);
     }
 
+    constexpr auto operator<=>(const Vector& oth) const = default;
+
     using Len2_t = decltype(T{} * T{});
 
     constexpr Len2_t Len2() const {
@@ -165,12 +167,13 @@ struct Vector {
     }
 
     template<typename U>
-    void rotate(U angle) {
+    Vector& rotate(U angle) {
         static_assert(dim == 2);
         T x = X();
         T y = Y();
         m_coord[0] = x * traits<U>::cos(angle) - y * traits<U>::sin(angle); 
-        m_coord[1] = x * traits<U>::sin(angle) + y * traits<U>::cos(angle); 
+        m_coord[1] = x * traits<U>::sin(angle) + y * traits<U>::cos(angle);
+        return *this; 
     }
 };
 

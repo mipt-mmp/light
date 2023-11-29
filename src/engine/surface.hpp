@@ -2,6 +2,7 @@
 #define ENGINE_SURFACE_HPP
 #include "units.hpp"
 #include "wave.hpp"
+#include <functional>
 
 namespace phys {
 
@@ -12,13 +13,38 @@ class Surface {
  public:
   virtual ~Surface();
 
-  virtual std::vector<LightSource> getSrcs() const = 0;
-  virtual bool setParent(Surface* parent) = 0;
+  virtual const std::vector<LightSource>& getSrcs() const = 0;
+
+  virtual void update(const std::vector<LightSource>& srcs);
+
+  virtual std::pair<Position, Position> getRect() const = 0;
+
+  static void recalculate(const std::vector<LightSource>& src, std::vector<LightSource>& dst, WavyEnvironment env);
+
+  [[deprecated("Use update")]] virtual bool setParent(Surface* ) {return true;}
+
+  virtual void 
+  setEnvironment(WavyEnvironment env) {
+    m_env = env;
+  }
+
+  LengthVal getZ() const {
+    auto [beg, end] = getRect();
+    return (beg.Z() + end.Z()) / 2;
+  }
+
+protected:
+  WavyEnvironment m_env;
 };
 
-class Lights : public Surface {
+//====================================================================================/
+//================================< Point Lights >====================================/
+//====================================================================================/
+
+class PointLights : public Surface {
  public:
-  void AddSource(LightSource source) {
+  void 
+  addSource(LightSource source) {
     if (!m_sources.empty()) {
       if (source.second.Z() != m_sources.front().second.Z()) {
         std::cerr << "You should add sources only with same Z coord\n";
@@ -26,43 +52,64 @@ class Lights : public Surface {
       }
     }
 
+    m_rect.first  = std::min(m_rect.first,  source.second);
+    m_rect.second = std::max(m_rect.second, source.second);
     m_sources.push_back(std::move(source));
   }
 
-  virtual std::vector<LightSource> getSrcs() const override {
+  virtual const std::vector<LightSource>& 
+  getSrcs() const override {
     return m_sources;
   }
 
-  virtual bool setParent(Surface*) override { return true; }
+  virtual std::pair<Position, Position> 
+  getRect() const override {return m_rect;}
 
-  virtual ~Lights() override;
+  virtual void 
+  update(const std::vector<LightSource>&) override {}
+
+  virtual ~PointLights() override;
 
  private:
   std::vector<LightSource> m_sources;
+  std::pair<Position, Position> m_rect;
+  Frequency m_frequency;
 };
 
-class Barrier : public Surface {
+
+//====================================================================================/
+//=====================================< Points Barrier >=============================/
+//====================================================================================/
+
+
+class PointsBarrier : public Surface {
  public:
-  void AddHole(Position hole);
-  void SetHolePos(size_t i, Position hole);
-  virtual std::vector<LightSource> getSrcs() const override;
+  void addHole(Position hole);
 
-  virtual bool setParent(Surface* surface) override {
-    if (m_parent != nullptr) {
-      return false;
-    }
+  void setHolePos(size_t i, Position hole);
 
-    m_parent = surface;
-    return true;
-  }
+  virtual const std::vector<LightSource>& 
+  getSrcs() const override {return m_sources;}
 
-  virtual ~Barrier() override;
+  virtual void update(const std::vector<LightSource>&) override;
+
+  virtual std::pair<Position, Position> 
+  getRect() const override {return m_rect;}
+
+  virtual ~PointsBarrier() override;
 
  private:
-  Surface* m_parent = nullptr;
+  void updateRect();
 
-  std::vector<Position> m_holes;
+  std::vector<LightSource> m_sources;
+  std::pair<Position, Position> m_rect;
 };
+
+
+//====================================================================================/
+//===================================< Displayer >====================================/
+//====================================================================================/
+
 
 class Displayer : public Surface {
   static constexpr Unit<num_t> XSteps = Unit<num_t>{1000.0};
@@ -72,35 +119,78 @@ class Displayer : public Surface {
   Displayer(Position corner, Position sizes)
       : m_corner(corner), m_sizes(sizes) {}
 
-  Position GetCorner() { return m_corner; }
+  Position getCorner() { return m_corner; }
 
-  Position GetSizes() { return m_sizes; }
+  Position getSizes() { return m_sizes; }
 
   void setZPos(Length val) {
     m_corner[2] = val;
   }
 
+  virtual void update(const std::vector<LightSource>&) override;
+
+  virtual std::pair<Position, Position> 
+  getRect() const override {return {m_corner, m_corner};}
+
   // We assume that every point of displayer is a light source (we will draw
   // intensivity of them)
-  virtual std::vector<LightSource> getSrcs() const override;
-
-  virtual bool setParent(Surface* surface) override {
-    if (m_parent != nullptr) {
-      return false;
-    }
-
-    m_parent = surface;
-    return true;
-  }
+  virtual const std::vector<LightSource>& 
+  getSrcs() const override {return m_dst;}
 
   virtual ~Displayer() override;
 
  private:
-  Surface* m_parent = nullptr;
+  void genDisplayMatrix();
 
+  std::vector<LightSource> m_dst;
   Position m_corner;
   Position m_sizes;
 };
+
+//====================================================================================/
+//===================================< Contig Surface >===============================/
+//====================================================================================/
+
+class ContigSurface : public Surface {
+public:
+  ContigSurface(Position pos);
+  ContigSurface(Position pos, std::function<Position(Position)> transform  );
+  ContigSurface(Position pos, std::function<bool    (Position)> transparent);
+  ContigSurface(Position pos, std::function<Position(Position)> transform, std::function<bool (Position)> transparent);
+
+  virtual void update(const std::vector<LightSource>& src) override;
+  
+  virtual const std::vector<LightSource>& 
+  getSrcs() const override {return m_srcs;}
+
+  virtual std::pair<Position, Position> 
+  getRect() const override {return m_rect;}
+
+  void setResolution(size_t resolution) {
+    m_resolution = resolution;
+    genSurface();
+  }
+
+  void setPosition(Position pos) {
+    m_corner = pos;
+    genSurface();
+  }
+
+
+
+
+private:
+  Position m_corner;
+  std::function<bool    (Position)> m_isTransparent  = [](Position){return true;};
+  std::function<Position(Position)> m_transformation = [](Position p){return p;};
+
+  size_t m_resolution = 1;
+  void genSurface();
+
+  std::pair<Position, Position> m_rect;
+  std::vector<LightSource> m_srcs;
+};
+
 
 }  // namespace phys
 

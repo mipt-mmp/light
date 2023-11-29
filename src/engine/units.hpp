@@ -237,6 +237,8 @@ using TemperatureVal = Unit<num_t, 0, 0, 0, 1>; // kg * m^2 * s^-1
 
 using EFieldVal = Unit<num_t, 1, -3, 1, 0, 0, -1>; // m kg s^-3 A-1
 
+using Brightness = Unit<num_t, 2, -6, 2, 0, 0, -2>; // EFieldVal ^ 2
+
 using FrequencyVal = Unit<num_t, 0, -1>; // m kg s^-3 A-1
 
 using Length = LengthVal;
@@ -265,6 +267,8 @@ using ImpulseMoment = Vector<ImpulseMomentVal>;
 using Time = TimeVal;
 using Mass = MassVal;
 using Energy = EnergyVal;
+
+using RefractiveIndex = NoUnit;
 
 constexpr const num_t Zepto = 1e-21;
 constexpr const num_t Atto = 1e-18;
@@ -448,6 +452,8 @@ PHYS_UNIT_LITERAL(Mass, kg)
 PHYS_UNIT_LITERAL(ForceVal, H)
 PHYS_UNIT_LITERAL(EnergyVal, J)
 PHYS_UNIT_LITERAL(Temperature, K)
+PHYS_UNIT_LITERAL(NoUnit, _)
+PHYS_UNIT_LITERAL(Frequency, Hz)
 #endif
 
 template <class IStream, typename Num, int Meter, int Sec, int KG, int K, int Mole, int Ampere,

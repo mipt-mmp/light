@@ -2,18 +2,27 @@
 
 namespace phys {
 
-void Chamber::AddSurface(Surface* surface) {
-  if (!m_surfaces.empty()) {
-    if (!surface->setParent(m_surfaces.back())) {
-      std::cerr << "You're adding already inited surf\n";
-      return;
-    }
-  }
-
+void Chamber::addSurface(Surface* surface) {
   m_surfaces.push_back(surface);
 }
 
+void 
+Chamber::update() {
+  if(m_surfaces.empty()) {
+    return;
+  }
+  
+  std::sort(m_surfaces.begin(), m_surfaces.end(), [](const Surface* lhs, const Surface* rhs) -> bool {return lhs->getZ() < rhs->getZ();});
+  for(size_t i = 0; i < m_surfaces.size()-1; ++i) {
+    m_surfaces[i+1]->setEnvironment(m_env);
+    m_surfaces[i+1]->update(m_surfaces[i]->getSrcs());
+  }
+}
+
+
+
 auto Chamber::GetMetrics() -> Metrics {
+  #if 0
   auto sources = m_surfaces.back()->getSrcs();
 
   auto minDiff = *sources.front().first.getIntensity();
@@ -31,7 +40,8 @@ auto Chamber::GetMetrics() -> Metrics {
   }
 
   auto period = (sources.front().second - bestOne).Y();
-  return Metrics{std::move(sources), period};
+#endif
+  return Metrics{};
 }
 
 Chamber::~Chamber() {
@@ -39,5 +49,4 @@ Chamber::~Chamber() {
     delete surf;
   }
 }
-
 }

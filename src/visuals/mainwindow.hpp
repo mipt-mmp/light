@@ -1,7 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "experimentdisplayer.hpp"
+#include "ScreenDisplayer.hpp"
+#include "chamber.hpp"
 #include <QMainWindow>
 #include <array>
 #include <QElapsedTimer>
@@ -27,7 +28,7 @@ private:
     Ui::MainWindow* ui;
 
     QTimer* m_timer;
-    ExperimentDisplayer* m_cd;
+    ScreenDisplayer* m_cd;
     
     QElapsedTimer m_elapsed;
 
@@ -36,13 +37,15 @@ private:
 
     size_t m_currentAtom = 0;
 
-    phys::Barrier* m_barrier;
+    phys::PointsBarrier* m_barrier;
     phys::Displayer* m_displayer;
 private slots:
     void toggleSimulation(bool);
     void setSimulationSpeed(int);
 
     void updateMetrics();
+
+    void physRecalc();
 
     void setDistance(int);
 };

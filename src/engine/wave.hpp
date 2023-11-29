@@ -1,38 +1,40 @@
 #ifndef ENGINE_WAVE_HPP
 #define ENGINE_WAVE_HPP
+#include "physconstants.hpp"
 #include "units.hpp"
 namespace phys {
+
+struct WavyEnvironment {
+    WavyEnvironment(Length len, Length loss = 1_m) : waveLength(len), eLossCoeff(loss) {}
+
+    WavyEnvironment(Frequency f = consts::red, RefractiveIndex n = 1__, Length loss = 1_m);
+
+    Length waveLength;
+    Length eLossCoeff;
+};
 
 // Now spheric wave
 class EWave {
     Complex<EFieldVal> m_wave;
-    Frequency m_frequency; // rad / s
+    EWave(Complex<EFieldVal> wave) : m_wave(wave) {}
 public:
-    EWave(Frequency frequency, EFieldVal val = {}, NoUnit phase_0 = {}) : m_wave(val, EFieldVal{0}), m_frequency(frequency) {
-        m_wave.rotate(phase_0);
+    EWave(EFieldVal val = EFieldVal{}, NoUnit phase_0 = NoUnit{});
+
+    EWave traveled(LengthVal l, WavyEnvironment env) const {
+        return EWave{(m_wave * (env.eLossCoeff / l)).rotate(l / env.waveLength)};
     }
 
-    EWave(EFieldVal val, Length len_wave, NoUnit phase_0);
-    
-
-    EWave traveled(LengthVal l) const;
-
     EWave& operator+=(const EWave& oth) {
-        if (oth.m_frequency != this->m_frequency) {
-            std::cerr << "Can't sum waves with different freq\n";
-            abort();
-        } // Overwise we can't sum waves like vectors;
-        
         m_wave += oth.m_wave;
         return *this;
     }
 
-    auto getIntensity() const {
+    Brightness getIntensity() const {
         return m_wave.Len2();
     }
 
-    auto getFreq() const {
-        return m_frequency;
+    void clear() {
+        m_wave = {};
     }
 };
 
