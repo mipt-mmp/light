@@ -20,8 +20,8 @@ MainWindow::MainWindow(QWidget* parent)
     ui->setupUi(this);
 
 //    presetYng();
-//    presetDifr();
-    presetLens();
+   presetDifr();
+    // presetLens();
 
     m_surfaces.addSurface(ui->displayer->getSurface());
     m_surfaces.update();
