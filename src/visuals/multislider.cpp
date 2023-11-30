@@ -28,6 +28,12 @@ int MultiSlider::addSlider(int value)
     return m_sliders.size() - 1;
 }
 
+void
+MultiSlider::setSliderValue(int n, int value) {
+    m_sliders[n] = value;
+    update();
+}
+
 void MultiSlider::paintEvent(QPaintEvent* event)
 {
     Q_UNUSED(event)

@@ -24,6 +24,7 @@ public:
 
     void resizeEvent(QResizeEvent* event) override;
 
+
 private:
     Ui::MainWindow* ui;
 
@@ -47,6 +48,7 @@ private:
     bool m_tracking = true;
 
 private slots:
+    void animation();
     void toggleSimulation(bool);
     void setSimulationSpeed(int);
 

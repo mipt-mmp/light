@@ -149,6 +149,18 @@ void MainWindow::updateMetrics() {
 
 }
 
+void MainWindow::animation() {
+    for(int i = ui->horizontalSlider->maximum(); i > ui->horizontalSlider->minimum() / 2; i -= 3) {
+        ui->horizontalSlider->setSliderValue(1, i);
+        setDistance(1, i);
+        if(!m_tracking)
+            physRecalc();
+        update();
+    }
+    // setDistance(1, ui->horizontalSlider->va);  
+}
+
+
 void MainWindow::physRecalc()
 {
     ui->displayer->resetColors();
@@ -196,5 +208,6 @@ void MainWindow::connectControls()
         connect(ui->horizontalSlider, SIGNAL(valueChangedNth(int,int)), this, SLOT(physRecalc()));
     }
     connect(ui->upd, SIGNAL(clicked()), this, SLOT(physRecalc()));
+    connect(ui->anime, SIGNAL(clicked()), this, SLOT(animation()));
 
 }
