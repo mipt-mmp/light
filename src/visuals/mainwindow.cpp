@@ -20,8 +20,9 @@ MainWindow::MainWindow(QWidget* parent)
     ui->setupUi(this);
 
 //    presetYng();
-   presetDifr();
+   // presetDifr();
     // presetLens();
+    presetFrenel();
 
     m_surfaces.addSurface(ui->displayer->getSurface());
     m_surfaces.update();
@@ -132,6 +133,45 @@ void MainWindow::presetLens()
     m_surfaces.setRefractiveIndex(1, 1.43__);
 }
 
+void
+MainWindow::presetFrenel() {
+    m_tracking = false;
+
+    constexpr const phys::Length DifrLightZ   = -2_m;
+    constexpr const phys::Length DifrBarrierZ = -1_m;
+    constexpr const phys::Position DifrLightPos{XMid, XMid, DifrLightZ};
+    constexpr const phys::Position DifrBarrierPos{XBoxSize, XBoxSize, DifrBarrierZ};
+    constexpr const phys::Position DifrBarrierPos2{XBoxSize, XBoxSize, DifrBarrierZ + 10.__ * ZScale};
+
+    ui->horizontalSlider->setMinimum(2 * (DifrLightZ / ZScale)->getVal());
+
+    m_lights = new phys::PointLights();
+    m_lights->addSource(std::make_pair(phys::EWave{phys::EFieldVal{1.}}, DifrLightPos));
+    m_surfaces.addSurface(m_lights);
+    ui->horizontalSlider->addSlider((DifrLightZ / ZScale)->getVal());
+
+    phys::Length redLen = phys::consts::c / phys::consts::red;
+
+    auto transform = [=](phys::Position pos) -> phys::Position {
+        phys::Length l = phys::sqrt(XMid * XMid - (pos.X() - XMid) * (pos.X() - XMid) + (pos.Y() - XMid) * (pos.Y() - XMid));
+        l -= phys::num_t(floor((l / (redLen * 1.43__))->getVal())) * redLen * 1.43__;
+        pos.Z() += l;
+        return pos;
+    };
+
+    auto* barrier1 = new phys::ContigSurface(DifrBarrierPos);
+    m_surfaces.addSurface(barrier1);
+    ui->horizontalSlider->addSlider((barrier1->getZ() / ZScale)->getVal());
+    barrier1->setResolution(30);
+
+    auto* barrier2 = new phys::ContigSurface(DifrBarrierPos2, transform);
+    m_surfaces.addSurface(barrier2);
+    ui->horizontalSlider->addSlider((barrier2->getZ() / ZScale)->getVal());
+    barrier2->setResolution(30);
+
+    m_surfaces.setRefractiveIndex(1, 1.43__);
+}
+
 void MainWindow::toggleSimulation(bool run) {
     if (run) {
         m_physThread->cont();
@@ -190,8 +230,9 @@ void MainWindow::physRecalc()
     ui->displayer->repaint();
 }
 
-void MainWindow::setDistance(int n, int x){
-
+void MainWindow::setDistance(int n, int x)
+{
+    std::cerr << x << "\n";
     m_surfaces.setZ(n, phys::num_t{x} * ZScale);
 }
 
